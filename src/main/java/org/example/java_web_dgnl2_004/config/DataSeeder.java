@@ -21,63 +21,75 @@ public class DataSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if (componentCategoryRepository.count() > 0) {
+        if (componentCategoryRepository.count() > 0 && keyboardPartRepository.count() > 0) {
             System.out.println("Data đã tồn tại");
             return;
         }
 
-        ComponentCategory linearSwitch = new ComponentCategory();
-        linearSwitch.setName("Linear");
-        linearSwitch.setDescription("Loại linh kiện phù hợp với các loại máy");
-        linearSwitch = componentCategoryRepository.save(linearSwitch);
+        ComponentCategory linearSwitch;
+        ComponentCategory tactileSwitch;
+        ComponentCategory aluminumSwitch;
 
-        ComponentCategory tactileSwitch = new ComponentCategory();
-        tactileSwitch.setName("Tactile");
-        tactileSwitch.setDescription("Linh kiện mới nhất");
-        tactileSwitch = componentCategoryRepository.save(tactileSwitch);
+        if (componentCategoryRepository.count() == 0) {
+            linearSwitch = new ComponentCategory();
+            linearSwitch.setName("Linear");
+            linearSwitch.setDescription("Loại linh kiện phù hợp với các loại máy");
+            linearSwitch = componentCategoryRepository.save(linearSwitch);
 
-        ComponentCategory aluminumSwitch = new ComponentCategory();
-        aluminumSwitch.setName("Aluminum");
-        aluminumSwitch.setDescription("Linh kiện chính hãng");
-        aluminumSwitch = componentCategoryRepository.save(aluminumSwitch);
+            tactileSwitch = new ComponentCategory();
+            tactileSwitch.setName("Tactile");
+            tactileSwitch.setDescription("Linh kiện mới nhất");
+            tactileSwitch = componentCategoryRepository.save(tactileSwitch);
 
-        KeyboardPart k1 = new KeyboardPart();
-        k1.setPartName("MMD Holy Panda V3");
-        k1.setManufacturer("Apple");
-        k1.setPrice(1000000.0);
-        k1.setReleaseDate(LocalDate.of(2023, 12, 12));
-        k1.setPartImage("");
-        k1.setComponentCategory(linearSwitch);
-        k1.setInStock(false);
+            aluminumSwitch = new ComponentCategory();
+            aluminumSwitch.setName("Aluminum");
+            aluminumSwitch.setDescription("Linh kiện chính hãng");
+            aluminumSwitch = componentCategoryRepository.save(aluminumSwitch);
+        } else {
+            linearSwitch  = componentCategoryRepository.findAll().get(0);
+            tactileSwitch = componentCategoryRepository.findAll().get(1);
+            aluminumSwitch = componentCategoryRepository.findAll().get(2);
+        }
 
-        KeyboardPart k2 = new KeyboardPart();
-        k2.setPartName("Neo Ergo Anodized Green");
-        k2.setManufacturer("Samsung");
-        k2.setPrice(500000.0);
-        k2.setReleaseDate(LocalDate.of(2012, 10, 11));
-        k2.setPartImage("");
-        k2.setComponentCategory(tactileSwitch);
-        k2.setInStock(false);
+        if (keyboardPartRepository.count() == 0) {
+            KeyboardPart k1 = new KeyboardPart();
+            k1.setPartName("MMD Holy Panda V3");
+            k1.setManufacturer("Apple");
+            k1.setPrice(1000000.0);
+            k1.setReleaseDate(LocalDate.of(2023, 12, 12));
+            k1.setPartImage("");
+            k1.setComponentCategory(linearSwitch);
+            k1.setInStock(false);
 
-        KeyboardPart k3 = new KeyboardPart();
-        k3.setPartName("ABC");
-        k3.setManufacturer("Celmi");
-        k3.setPrice(13000000.0);
-        k3.setReleaseDate(LocalDate.of(2020, 9, 8));
-        k3.setPartImage("");
-        k3.setComponentCategory(aluminumSwitch);
-        k3.setInStock(true);
+            KeyboardPart k2 = new KeyboardPart();
+            k2.setPartName("Neo Ergo Anodized Green");
+            k2.setManufacturer("Samsung");
+            k2.setPrice(500000.0);
+            k2.setReleaseDate(LocalDate.of(2012, 10, 11));
+            k2.setPartImage("");
+            k2.setComponentCategory(tactileSwitch);
+            k2.setInStock(false);
 
-        KeyboardPart k4 = new KeyboardPart();
-        k4.setPartName("Admin");
-        k4.setManufacturer("Celmi");
-        k4.setPrice(3000000.0);
-        k4.setReleaseDate(LocalDate.of(2019, 8, 10));
-        k4.setPartImage("");
-        k4.setComponentCategory(aluminumSwitch);
-        k4.setInStock(true);
+            KeyboardPart k3 = new KeyboardPart();
+            k3.setPartName("ABC");
+            k3.setManufacturer("Celmi");
+            k3.setPrice(13000000.0);
+            k3.setReleaseDate(LocalDate.of(2020, 9, 8));
+            k3.setPartImage("");
+            k3.setComponentCategory(aluminumSwitch);
+            k3.setInStock(true);
 
-        keyboardPartRepository.saveAll(List.of(k1, k2, k3, k4));
+            KeyboardPart k4 = new KeyboardPart();
+            k4.setPartName("Admin");
+            k4.setManufacturer("Celmi");
+            k4.setPrice(3000000.0);
+            k4.setReleaseDate(LocalDate.of(2019, 8, 10));
+            k4.setPartImage("");
+            k4.setComponentCategory(aluminumSwitch);
+            k4.setInStock(true);
+
+            keyboardPartRepository.saveAll(List.of(k1, k2, k3, k4));
+        }
     }
 }
 

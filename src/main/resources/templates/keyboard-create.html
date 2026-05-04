@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -34,21 +34,19 @@
 
         <div class="form-group">
             <label>Ngày ra mắt</label>
-            <input type="date" class="form-control" th:field="*{manufacturer}"/>
+            <input type="date" class="form-control" th:field="*{releaseDate}"/>
         </div>
 
         <div class="form-group">
             <label>Ảnh linh kiện</label>
-            <input type="file" class="form-control-file" name="avatarFile"
-                   accept="image/*"/>
+            <input type="file" class="form-control-file" name="avatarFile" accept="image/*"/>
             <small class="text-muted">Định dạng: JPG, PNG, GIF. Tối đa 5MB.</small>
         </div>
 
         <div class="form-group">
             <label>Loại linh kiện</label>
-
-            <select class="form-control" name="departmentId">
-                <option  value="" disabled selected>-- Chọn loại linh kiện --</option>
+            <select class="form-control" name="categoryId">
+                <option value="" disabled selected>-- Chọn loại linh kiện --</option>
                 <option th:each="dept : ${categories}"
                         th:value="${dept.id}"
                         th:text="${dept.name}">
@@ -59,16 +57,13 @@
         <div class="form-group">
             <label>Trạng thái</label>
             <select class="form-control" th:field="*{inStock}">
-                <option value="TRUE">Còn hàng</option>
-                <option value="FALSE">Hết hàng</option>
+                <option value="true">Còn hàng</option>
+                <option value="false">Hết hàng</option>
             </select>
         </div>
 
-
-
-
         <button type="submit" class="btn btn-primary">Lưu linh kiện</button>
-        <a th:href="@{/employees}" class="btn btn-secondary ml-2">Huỷ</a>
+        <a th:href="@{/keyboardParts}" class="btn btn-secondary ml-2">Huỷ</a>
 
     </form>
 </div>

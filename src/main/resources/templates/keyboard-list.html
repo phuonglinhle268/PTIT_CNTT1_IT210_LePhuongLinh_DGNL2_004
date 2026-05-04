@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,9 +12,8 @@
             border: 2px solid #dee2e6;
         }
         .status-badge { font-size: 0.8rem; padding: 4px 10px; border-radius: 12px; }
-        .status-ACTIVE   { background: #d4edda; color: #155724; }
-        .status-INACTIVE { background: #f8d7da; color: #721c24; }
-        .status-ON_LEAVE { background: #fff3cd; color: #856404; }
+        .status-true  { background: #d4edda; color: #155724; }
+        .status-false { background: #f8d7da; color: #721c24; }
         th a { color: white; text-decoration: none; }
     </style>
 </head>
@@ -27,7 +26,6 @@
     </div>
 
     <form th:action="@{/keyboardParts}" method="get" class="mb-4">
-
         <div class="form-row align-items-end">
 
             <div class="col-md-3">
@@ -69,10 +67,11 @@
         <thead class="thead-dark">
         <tr>
             <th>ID</th>
+            <th>Ảnh linh kiện</th>
+            <th>Tên linh kiện</th>
             <th>Nhãn hiệu</th>
             <th>Giá</th>
             <th>Ngày ra mắt</th>
-            <th>Ảnh linh kiện</th>
             <th>Loại linh kiện</th>
             <th>Trạng thái</th>
         </tr>
@@ -96,17 +95,17 @@
             <td th:text="${kb.releaseDate}"></td>
             <td th:text="${kb.componentCategory != null ? kb.componentCategory.name : 'Chưa phân loại'}"></td>
             <td>
-                    <span th:class="'status-badge status-' + ${kb.inStock}"
-                          th:text="${kb.inStock}"></span>
+                <span th:class="'status-badge status-' + ${kb.inStock}"
+                      th:text="${kb.inStock ? 'Còn hàng' : 'Hết hàng'}"></span>
             </td>
         </tr>
 
         <tr th:if="${#lists.isEmpty(keyboards)}">
-            <td colspan="6" class="text-center text-muted py-4">
+            <td colspan="8" class="text-center text-muted py-4">
                 Không tìm thấy linh kiện
                 <span th:if="${!#strings.isEmpty(keyword)}">
-                        với từ khoá "<strong th:text="${keyword}"></strong>"
-                    </span>
+                    với từ khoá "<strong th:text="${keyword}"></strong>"
+                </span>
             </td>
         </tr>
         </tbody>
@@ -117,8 +116,7 @@
 
             <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
                 <a class="page-link"
-                   th:href="@{/keyboardParts(keyword=${keyword}, categoryId=${categoryId},
-                   page=${currentPage - 1})}">
+                   th:href="@{/keyboardParts(keyword=${keyword}, categoryId=${categoryId}, page=${currentPage - 1})}">
                     &laquo; Trước
                 </a>
             </li>
@@ -127,18 +125,14 @@
                 th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                 th:classappend="${i == currentPage ? 'active' : ''}">
                 <a class="page-link"
-                   th:href="@{/keyboardParts(keyword=${keyword}, categoryId=${categoryId},
-                   page=${i})}"
+                   th:href="@{/keyboardParts(keyword=${keyword}, categoryId=${categoryId}, page=${i})}"
                    th:text="${i + 1}">
                 </a>
             </li>
 
-            <li class="page-item"
-                th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
                 <a class="page-link"
-                   th:href="@{/keyboardParts(keyword=${keyword}, categoryId=${categoryId},
-
-                   page=${currentPage + 1})}">
+                   th:href="@{/keyboardParts(keyword=${keyword}, categoryId=${categoryId}, page=${currentPage + 1})}">
                     Sau &raquo;
                 </a>
             </li>
