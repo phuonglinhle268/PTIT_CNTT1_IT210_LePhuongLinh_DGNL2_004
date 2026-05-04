@@ -71,7 +71,7 @@ public class DataSeeder implements CommandLineRunner {
             k2.setInStock(false);
 
             KeyboardPart k3 = new KeyboardPart();
-            k3.setPartName("ABC");
+            k3.setPartName("ABCDEF");
             k3.setManufacturer("Celmi");
             k3.setPrice(13000000.0);
             k3.setReleaseDate(LocalDate.of(2020, 9, 8));
