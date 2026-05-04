@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4" style="max-width: 600px;">
+
+    <h2 class="mb-4">Thêm linh kiện</h2>
+
+    <form th:action="@{/keyboardParts/save}"
+          th:object="${keyboard}"
+          method="post"
+          enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label>Tên linh kiện</label>
+            <input type="text" class="form-control" th:field="*{partName}"/>
+            <p style="color: red;" th:errors="*{partName}"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Nhãn hiệu</label>
+            <input type="text" class="form-control" th:field="*{manufacturer}"/>
+            <p style="color: red;" th:errors="*{manufacturer}"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Giá bán</label>
+            <input type="number" class="form-control" th:field="*{price}"/>
+        </div>
+
+        <div class="form-group">
+            <label>Ngày ra mắt</label>
+            <input type="date" class="form-control" th:field="*{manufacturer}"/>
+        </div>
+
+        <div class="form-group">
+            <label>Ảnh linh kiện</label>
+            <input type="file" class="form-control-file" name="avatarFile"
+                   accept="image/*"/>
+            <small class="text-muted">Định dạng: JPG, PNG, GIF. Tối đa 5MB.</small>
+        </div>
+
+        <div class="form-group">
+            <label>Loại linh kiện</label>
+
+            <select class="form-control" name="departmentId">
+                <option  value="" disabled selected>-- Chọn loại linh kiện --</option>
+                <option th:each="dept : ${categories}"
+                        th:value="${dept.id}"
+                        th:text="${dept.name}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Trạng thái</label>
+            <select class="form-control" th:field="*{inStock}">
+                <option value="TRUE">Còn hàng</option>
+                <option value="FALSE">Hết hàng</option>
+            </select>
+        </div>
+
+
+
+
+        <button type="submit" class="btn btn-primary">Lưu linh kiện</button>
+        <a th:href="@{/employees}" class="btn btn-secondary ml-2">Huỷ</a>
+
+    </form>
+</div>
+</body>
+</html>

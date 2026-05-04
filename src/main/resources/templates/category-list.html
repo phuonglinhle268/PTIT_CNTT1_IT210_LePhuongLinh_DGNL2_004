@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Các loại linh kiện</h2>
+        <a th:href="@{/keyboards}" class="btn btn-secondary">Xem linh kiện</a>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+        có <span th:text="${successMessage}"></span>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
+        không <span th:text="${errorMessage}"></span>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Loại linh kiện</th>
+            <th>Mô tả</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dept, stat : ${componentCategories}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${dept.name}"></td>
+            <td th:text="${dept.description}"></td>
+            <td>
+                <form th:action="@{/componentCategories/{id}/delete(id=${dept.id})}"
+                      method="post"
+                      onsubmit="return confirm('Xóa loại linh kiện?')">
+                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(componentCategories)}">
+            <td colspan="4" class="text-center text-muted">Không có loại linh kiện nào.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
